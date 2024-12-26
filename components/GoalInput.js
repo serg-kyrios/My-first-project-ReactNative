@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, TextInput, View, Button } from 'react-native';
+import { StyleSheet, TextInput, View, Button, Modal } from 'react-native';
 
 function GoalInput(props) {
     const [enteredGoalText, setEnteredGoalText] = useState('');
@@ -16,19 +16,21 @@ function GoalInput(props) {
     function addGoalHandler() {
         if (enteredGoalText.trim().length === 0) return; // Перевірка на порожній текст
         props.onAddGoal(enteredGoalText); // Передача тексту до батьківського компонента
-        setEnteredGoalText(''); // Очищення текстового поля
+        //setEnteredGoalText(''); // Очищення текстового поля
     }
 
     return (
-        <View style={styles.inputContainer}>
-            <TextInput
-                style={styles.textInput}
-                placeholder='Your course goal!'
-                onChangeText={goalInputHandler}
-                value={enteredGoalText}
-            />
-            <Button title='Add Goal' onPress={addGoalHandler} />
-        </View>
+        <Modal visible={props.visible} animationType='slide'>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='Your course goal!'
+                    onChangeText={goalInputHandler}
+                    value={enteredGoalText}
+                />
+                <Button title='Add Goal' onPress={addGoalHandler} />
+            </View>
+        </Modal>
     );
 }
 export default GoalInput;
